@@ -9,6 +9,7 @@ import time
 from datetime import datetime, timedelta
 import configparser
 import getpass
+import argparse
 
 log_folder = os.path.join(os.path.expanduser('~'), 'Log-Rotation/course_project/log')
 archive_folder = os.path.join(os.path.expanduser('~'), 'Log-Rotation/course_project/archived_logs')
@@ -19,8 +20,16 @@ os.makedirs(archive_folder, exist_ok=True)
 config = configparser.ConfigParser()
 config.read(os.path.join(os.path.expanduser('~'), 'Log-Rotation/log.cfg'))
 
-MAX_SIZE_MB = config.getint('Settings', 'MAX_SIZE_MB', fallback=100)
-RETENTION_DAYS = config.getint('Settings', 'RETENTION_DAYS', fallback=7)
+# Argument Parsing
+parser = argparse.ArgumentParser(description='Log rotation script')
+parser.add_argument('--max_size_mb', type=int, help='Maximum log folder size in MB')
+parser.add_argument('--retention_days', type=int, help="Days to retain archived logs")
+
+args = parser.parse_args()
+
+# Prioritize args over config file
+MAX_SIZE_MB = args.max_size_mb if args.max_size_mb else config.getint('Settings', 'MAX_SIZE_MB', fallback=100)
+RETENTION_DAYS = args.retention_days if args.retention_days else config.getint('Settings', 'RETENTION_DAYS', fallback=7)
 
 # Configure logging
 logging.basicConfig(filename=status_log, level=logging.INFO,
