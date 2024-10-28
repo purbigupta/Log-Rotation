@@ -8,6 +8,7 @@ import logging
 import time
 from datetime import datetime, timedelta
 import configparser
+import getpass
 
 log_folder = os.path.join(os.path.expanduser('~'), 'Log-Rotation/course_project/log')
 archive_folder = os.path.join(os.path.expanduser('~'), 'Log-Rotation/course_project/archived_logs')
@@ -57,22 +58,39 @@ def zip_and_delete_logs():
 
     
 def delete_old_archives():
-    retention_period = datetime.now() - timedelta(days=RETENTION_DAYS)
-    for filename in os.listdir(archive_folder):
-        file_path = os.path.join(archive_folder, filename)
+    try:    
+        retention_period = datetime.now() - timedelta(days=RETENTION_DAYS)
+        for filename in os.listdir(archive_folder):
+         file_path = os.path.join(archive_folder, filename)
         if filename.endswith('.zip'):
             file_creation_time = datetime.fromtimestamp(os.path.getctime(file_path))
             if file_creation_time < retention_period:
                 os.remove(file_path)
                 print(f"Deleted old archive: {filename}")
+    except Exception as e:
+        logging.error(f"Error deleting old archives: {e}")
+    exit(2)
 
 
 def check_folder_size():
-    total_size = sum(os.path.getsize(os.path.join(log_folder, f)) for f in os.listdir(log_folder))
-    max_size_bytes = MAX_SIZE_MB * 1024 * 1024
-    if total_size > max_size_bytes:
-        logging.warning(f"Log folder size ({total_size} bytes) exceeds {MAX_SIZE_MB} MB.")
+    try:
+        total_size = sum(os.path.getsize(os.path.join(log_folder, f)) for f in os.listdir(log_folder))
+        max_size_bytes = MAX_SIZE_MB * 1024 * 1024
+        if total_size > max_size_bytes:
+            logging.warning(f"Log folder size ({total_size} bytes) exceeds {MAX_SIZE_MB} MB.")
+    except Exception as e:
+        logging.error(f"Error checking folder size: {e}")
+    exit(3)
 
-zip_and_delete_logs()
-delete_old_archives()
-check_folder_size()
+
+if getpass.getuser() != 'logmanager':
+    logging.error(f"Access Denied: Only user named 'logmanager' is allowed to run script.")
+    exit(4)
+
+try:
+    zip_and_delete_logs()
+    delete_old_archives()
+    check_folder_size()
+except Exception as e:
+    logging.error(f"Unexpected error in main: {e}")
+    exit(99)
