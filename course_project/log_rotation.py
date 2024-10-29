@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.12
 
 import os
+import pwd
 import zipfile
 import shutil
 import gzip
@@ -24,6 +25,7 @@ config.read(os.path.join(os.path.expanduser('~'), 'Log-Rotation/log.cfg'))
 parser = argparse.ArgumentParser(description='Log rotation script')
 parser.add_argument('--max_size_mb', type=int, help='Maximum log folder size in MB')
 parser.add_argument('--retention_days', type=int, help="Days to retain archived logs")
+parser.add_argument('--delegate', type=str, help="Delegate ownership of logs to another user")  
 
 args = parser.parse_args()
 
@@ -34,6 +36,28 @@ RETENTION_DAYS = args.retention_days if args.retention_days else config.getint('
 # Configure logging
 logging.basicConfig(filename=status_log, level=logging.INFO,
                     format='%(asctime)s - %(levelname)s - %(message)s')
+
+def delegate_ownership(new_owner):
+    try:
+        # Check if the new owner exists
+        user_info = pwd.getpwnam(new_owner)
+        user_id = user_info.pw_uid
+        group_id = user_info.pw_gid
+        
+        # Change ownership of log files and archive files to new owner
+        for folder in [log_folder, archive_folder]:
+            for filename in os.listdir(folder):
+                file_path = os.path.join(folder, filename)
+                os.chown(file_path, user_id, group_id)
+        
+        logging.info(f"Ownership delegated to user: {new_owner}")
+    except KeyError:
+        logging.error(f"User {new_owner} does not exist.")
+        exit(5)
+    except Exception as e:
+        logging.error(f"Error delegating ownership: {e}")
+        exit(6)
+
 def zip_and_delete_logs():
     try:
         logging.info("Zipping logs...")
@@ -95,7 +119,6 @@ def check_folder_size():
 if getpass.getuser() != 'logmanager':
     logging.error(f"Access Denied: Only user named 'logmanager' is allowed to run script.")
     exit(4)
-
 try:
     zip_and_delete_logs()
     delete_old_archives()
@@ -103,3 +126,19 @@ try:
 except Exception as e:
     logging.error(f"Unexpected error in main: {e}")
     exit(99)
+
+if __name__ == '__main__':
+    # TODO: add other parts here like getuser function 
+
+    # Parse delegate argument
+    args = parser.parse_args()
+    if args.delegate:
+        delegate_ownership(args.delegate)
+    else:
+        try:
+            zip_and_delete_logs()
+            delete_old_archives()
+            check_folder_size()
+        except Exception as e:
+            logging.error(f"Unexpected error in main: {e}")
+            exit(99)
