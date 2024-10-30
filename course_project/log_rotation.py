@@ -10,7 +10,9 @@ import configparser
 import getpass
 import argparse
 
-# Set base directory to the current working directory
+print("Script Started")
+
+# Sets base directory to the current working directory
 base_folder = os.getcwd()
 log_folder = os.path.join(base_folder, 'log')
 archive_folder = os.path.join(base_folder, 'archived_logs')
@@ -67,8 +69,12 @@ def delegate_ownership(new_owner):
 
 # Zip and delete logs function
 def zip_and_delete_logs():
+    zip_filename = None
+    print("Starting log rotation process")
+    print("Archive folder is set at {arhive_folder}")
     try:
         logging.info("Zipping logs...")
+        print("Zip filename will be: {zip_filename}")
         today = datetime.now().strftime('%Y-%m-%d')
         zip_filename = os.path.join(archive_folder, f'{today}_logs.zip')
 
@@ -77,12 +83,17 @@ def zip_and_delete_logs():
         largest_size = 0
 
         with zipfile.ZipFile(zip_filename, 'w') as log_zip:
+            print(f"Checking files in folder: {log_folder}")
+            print(f"Found log files: {os.listdir(log_folder)}")
             for filename in os.listdir(log_folder):
+                print(f"Processing file: {filename}")
                 if filename.endswith('.log'):
                     file_path = os.path.join(log_folder, filename)
                     file_size = os.path.getsize(file_path)
                     log_zip.write(file_path, arcname=filename)
+                    print(f"Zipped and removed: {filename}")
                     os.remove(file_path)
+                    print("Zipping completed succesfully")
                     total_files += 1
                     if file_size > largest_size:
                         largest_file = filename
@@ -107,6 +118,7 @@ def delete_old_archives():
                 file_creation_time = datetime.fromtimestamp(os.path.getctime(file_path))
                 if file_creation_time < retention_period:
                     os.remove(file_path)
+                    print(f"Deleted old archive: {filename}")
                     logging.info(f"Deleted old archive: {filename}")
     except Exception as e:
         logging.error(f"Error deleting old archives: {e}")
