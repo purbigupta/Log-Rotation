@@ -1,0 +1,8 @@
+[2024-10-24 02:12:07] INFO: User 'logmanager' successfully authenticated.
+[2024-10-24 04:58:21] WARNING: Failed login attempt for user 'admin' from IP 10.0.0.23.
+[2024-10-24 05:03:14] INFO: User 'logmanager' successfully authenticated.
+[2024-10-24 09:14:55] INFO: Password changed for user 'backup_user'.
+[2024-10-24 13:24:07] WARNING: Failed login attempt for user 'guest' from IP 192.168.2.10.
+[2024-10-24 18:47:59] INFO: User 'admin' logged out.
+[2024-10-24 20:30:11] ERROR: Authentication failed for user 'root' due to incorrect password.
+[2024-10-24 22:14:17] INFO: User 'test_user' successfully authenticated.
