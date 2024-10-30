@@ -1,0 +1,67 @@
+2024-10-29 14:41:44,172 - INFO - Zipping logs...
+2024-10-29 14:41:44,201 - INFO - Total number of zipped files: 2
+2024-10-29 14:41:44,201 - INFO - Largest zipped file: sample2.log with size 624 bytes.
+2024-10-29 14:41:44,213 - INFO - Tasks completed successfully.
+2024-10-29 14:45:54,550 - INFO - Zipping logs...
+2024-10-29 14:45:54,615 - INFO - Total number of zipped files: 2
+2024-10-29 14:45:54,615 - INFO - Largest zipped file: None with size 0 bytes.
+2024-10-29 14:45:54,640 - INFO - Tasks completed successfully.
+2024-10-29 14:54:58,757 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/.DS_Store.
+2024-10-29 14:54:58,764 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-26_logs.zip.
+2024-10-29 14:54:58,772 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-27_logs.zip.
+2024-10-29 14:54:58,779 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-28_logs.zip.
+2024-10-29 14:54:58,786 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-29_logs.zip.
+2024-10-29 14:54:58,787 - INFO - Ownership delegated to user: hujji3
+2024-10-29 14:57:01,378 - INFO - Zipping logs...
+2024-10-29 14:57:01,443 - INFO - Total number of zipped files: 2
+2024-10-29 14:57:01,444 - INFO - Largest zipped file: None with size 0 bytes.
+2024-10-29 14:57:01,470 - INFO - Tasks completed successfully.
+2024-10-29 15:14:07,726 - INFO - Zipping logs...
+2024-10-29 15:14:07,750 - INFO - No files were zipped.
+2024-10-29 15:14:07,771 - INFO - Tasks completed successfully.
+2024-10-29 16:49:31,122 - INFO - Zipping logs...
+2024-10-29 16:49:31,161 - INFO - No files were zipped.
+2024-10-29 16:49:31,193 - INFO - Tasks completed successfully.
+2024-10-29 16:58:45,164 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/.DS_Store.
+2024-10-29 16:58:45,166 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-26_logs.zip.
+2024-10-29 16:58:45,167 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-27_logs.zip.
+2024-10-29 16:58:45,169 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-28_logs.zip.
+2024-10-29 16:58:45,171 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-29_logs.zip.
+2024-10-29 16:58:45,171 - INFO - Ownership delegated to user: hujji3
+2024-10-29 17:02:16,836 - INFO - Zipping logs...
+2024-10-29 17:02:16,846 - INFO - No files were zipped.
+2024-10-29 17:02:16,852 - INFO - Tasks completed successfully.
+2024-10-29 17:05:34,065 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/.DS_Store.
+2024-10-29 17:05:34,069 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-26_logs.zip.
+2024-10-29 17:05:34,072 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-27_logs.zip.
+2024-10-29 17:05:34,075 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-28_logs.zip.
+2024-10-29 17:05:34,077 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-29_logs.zip.
+2024-10-29 17:05:34,077 - INFO - Ownership delegated to user: random
+2024-10-29 17:15:31,992 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/.DS_Store.
+2024-10-29 17:15:31,995 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-26_logs.zip.
+2024-10-29 17:15:31,996 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-27_logs.zip.
+2024-10-29 17:15:31,998 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-28_logs.zip.
+2024-10-29 17:15:32,000 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-29_logs.zip.
+2024-10-29 17:15:32,000 - INFO - Ownership delegated to user: random
+2024-10-29 17:15:55,084 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/.DS_Store.
+2024-10-29 17:15:55,085 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-26_logs.zip.
+2024-10-29 17:15:55,086 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-27_logs.zip.
+2024-10-29 17:15:55,087 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-28_logs.zip.
+2024-10-29 17:15:55,089 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-29_logs.zip.
+2024-10-29 17:15:55,089 - INFO - Ownership delegated to user: random
+2024-10-29 17:16:08,576 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/.DS_Store.
+2024-10-29 17:16:08,577 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-26_logs.zip.
+2024-10-29 17:16:08,578 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-27_logs.zip.
+2024-10-29 17:16:08,579 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-28_logs.zip.
+2024-10-29 17:16:08,580 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-29_logs.zip.
+2024-10-29 17:16:08,580 - INFO - Ownership delegated to user: random
+2024-10-29 17:16:44,633 - INFO - Zipping logs...
+2024-10-29 17:16:44,645 - INFO - No files were zipped.
+2024-10-29 17:16:44,651 - INFO - Tasks completed successfully.
+2024-10-29 17:18:34,404 - ERROR - User hujji does not exist.
+2024-10-29 17:18:39,754 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/.DS_Store.
+2024-10-29 17:18:39,756 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-26_logs.zip.
+2024-10-29 17:18:39,757 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-27_logs.zip.
+2024-10-29 17:18:39,759 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-28_logs.zip.
+2024-10-29 17:18:39,761 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-29_logs.zip.
+2024-10-29 17:18:39,762 - INFO - Ownership delegated to user: hujji3

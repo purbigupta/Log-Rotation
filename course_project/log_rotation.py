@@ -3,8 +3,6 @@
 import os
 import pwd
 import zipfile
-import shutil
-import gzip
 import logging
 import time
 from datetime import datetime, timedelta
@@ -12,20 +10,26 @@ import configparser
 import getpass
 import argparse
 
-log_folder = os.path.join(os.path.expanduser('~'), 'Log-Rotation/course_project/log')
-archive_folder = os.path.join(os.path.expanduser('~'), 'Log-Rotation/course_project/archived_logs')
-status_log = os.path.join(os.path.expanduser('~'), 'Log-Rotation/rotation_status.log')
+# Set base directory to the current working directory
+base_folder = os.getcwd()
+log_folder = os.path.join(base_folder, 'log')
+archive_folder = os.path.join(base_folder, 'archived_logs')
+status_log = os.path.join(base_folder, 'rotation_status.log')
+
+# Ensure directories exist
+os.makedirs(log_folder, exist_ok=True)
 os.makedirs(archive_folder, exist_ok=True)
 
 # Load configurations from log.cfg
 config = configparser.ConfigParser()
-config.read(os.path.join(os.path.expanduser('~'), 'Log-Rotation/log.cfg'))
+config_file_path = os.path.join(base_folder, 'log.cfg')
+config.read(config_file_path)
 
 # Argument Parsing
 parser = argparse.ArgumentParser(description='Log rotation script')
 parser.add_argument('--max_size_mb', type=int, help='Maximum log folder size in MB')
 parser.add_argument('--retention_days', type=int, help="Days to retain archived logs")
-parser.add_argument('--delegate', type=str, help="Delegate ownership of logs to another user")  
+parser.add_argument('--delegate', type=str, help="Delegate ownership of logs to another user")
 
 args = parser.parse_args()
 
@@ -34,21 +38,24 @@ MAX_SIZE_MB = args.max_size_mb if args.max_size_mb else config.getint('Settings'
 RETENTION_DAYS = args.retention_days if args.retention_days else config.getint('Settings', 'RETENTION_DAYS', fallback=7)
 
 # Configure logging
-logging.basicConfig(filename=status_log, level=logging.INFO,
-                    format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(filename=status_log, level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# Delegate ownership function
 def delegate_ownership(new_owner):
     try:
-        # Check if the new owner exists
         user_info = pwd.getpwnam(new_owner)
         user_id = user_info.pw_uid
         group_id = user_info.pw_gid
-        
-        # Change ownership of log files and archive files to new owner
+
         for folder in [log_folder, archive_folder]:
             for filename in os.listdir(folder):
                 file_path = os.path.join(folder, filename)
-                os.chown(file_path, user_id, group_id)
+                try:
+                    os.chown(file_path, user_id, group_id)
+                except PermissionError:
+                    logging.error(f"Permission denied: Cannot change ownership of {file_path}.")
+                except FileNotFoundError:
+                    logging.error(f"File not found: {file_path}.")
         
         logging.info(f"Ownership delegated to user: {new_owner}")
     except KeyError:
@@ -58,12 +65,13 @@ def delegate_ownership(new_owner):
         logging.error(f"Error delegating ownership: {e}")
         exit(6)
 
+# Zip and delete logs function
 def zip_and_delete_logs():
     try:
         logging.info("Zipping logs...")
-        logging.info(f"Log folder path: {log_folder}")  # Add this line
         today = datetime.now().strftime('%Y-%m-%d')
         zip_filename = os.path.join(archive_folder, f'{today}_logs.zip')
+
         total_files = 0
         largest_file = None
         largest_size = 0
@@ -82,29 +90,29 @@ def zip_and_delete_logs():
 
         if total_files > 0:
             logging.info(f"Total number of zipped files: {total_files}")
-            logging.info(f"Largest zipped file: {largest_file} with size {largest_size} bytes, created on {today}.")
+            logging.info(f"Largest zipped file: {largest_file} with size {largest_size} bytes.")
         else:
             logging.info("No files were zipped.")
     except Exception as e:
         logging.error(f"Error during zipping logs: {e}")
         exit(1)
 
-    
+# Delete old archives function
 def delete_old_archives():
-    try:    
+    try:
         retention_period = datetime.now() - timedelta(days=RETENTION_DAYS)
         for filename in os.listdir(archive_folder):
-         file_path = os.path.join(archive_folder, filename)
-        if filename.endswith('.zip'):
-            file_creation_time = datetime.fromtimestamp(os.path.getctime(file_path))
-            if file_creation_time < retention_period:
-                os.remove(file_path)
-                print(f"Deleted old archive: {filename}")
+            file_path = os.path.join(archive_folder, filename)
+            if filename.endswith('.zip'):
+                file_creation_time = datetime.fromtimestamp(os.path.getctime(file_path))
+                if file_creation_time < retention_period:
+                    os.remove(file_path)
+                    logging.info(f"Deleted old archive: {filename}")
     except Exception as e:
         logging.error(f"Error deleting old archives: {e}")
-    exit(2)
+        exit(2)
 
-
+# Check folder size function
 def check_folder_size():
     try:
         total_size = sum(os.path.getsize(os.path.join(log_folder, f)) for f in os.listdir(log_folder))
@@ -113,25 +121,10 @@ def check_folder_size():
             logging.warning(f"Log folder size ({total_size} bytes) exceeds {MAX_SIZE_MB} MB.")
     except Exception as e:
         logging.error(f"Error checking folder size: {e}")
-    exit(3)
+        exit(3)
 
-
-if getpass.getuser() != 'logmanager':
-    logging.error(f"Access Denied: Only user named 'logmanager' is allowed to run script.")
-    exit(4)
-try:
-    zip_and_delete_logs()
-    delete_old_archives()
-    check_folder_size()
-except Exception as e:
-    logging.error(f"Unexpected error in main: {e}")
-    exit(99)
-
-if __name__ == '__main__':
-    # TODO: add other parts here like getuser function 
-
-    # Parse delegate argument
-    args = parser.parse_args()
+# Main execution block
+if __name__ == "__main__":
     if args.delegate:
         delegate_ownership(args.delegate)
     else:
@@ -139,6 +132,7 @@ if __name__ == '__main__':
             zip_and_delete_logs()
             delete_old_archives()
             check_folder_size()
+            logging.info("Tasks completed successfully.")
         except Exception as e:
             logging.error(f"Unexpected error in main: {e}")
             exit(99)
