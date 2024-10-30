@@ -65,3 +65,7 @@
 2024-10-29 17:18:39,759 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-28_logs.zip.
 2024-10-29 17:18:39,761 - ERROR - Permission denied: Cannot change ownership of /mnt/c/users/hozef/Log-Rotation/course_project/archived_logs/2024-10-29_logs.zip.
 2024-10-29 17:18:39,762 - INFO - Ownership delegated to user: hujji3
+2024-10-29 20:50:27,792 - INFO - Zipping logs...
+2024-10-29 20:50:27,840 - INFO - Total number of zipped files: 2
+2024-10-29 20:50:27,840 - INFO - Largest zipped file: None with size 0 bytes.
+2024-10-29 20:50:27,867 - INFO - Tasks completed successfully.
